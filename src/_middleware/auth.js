@@ -6,8 +6,8 @@ const db = require('../db/models')
 const User = db.User;
 
 
-function signToken(userId) {
-    return jwt.sign({userId: userId}, 'thisismyverysecretkey', {
+function signToken(userId, username, firstName, lastName, password) {
+    return jwt.sign({userId: userId, username: username, firstName: firstName, lastName: lastName, password: password}, 'thisismyverysecretkey', {
         expiresIn:60 * 60 * 5
     })
 }

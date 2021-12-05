@@ -9,7 +9,8 @@ const userController = require('../controllers/user.controller')
 
 // router.get('/',  userController.getAll);
 router.get('/me', auth.isAuth(), userController.getUserPosts);
-router.put('/me', auth.isAuth(), userController.updateSchema, userController.updateUser);
-router.delete('/me',  userController._delete);
+router.patch('/me', auth.isAuth(), userController.updateSchema, userController.updateUser);
+router.delete('/me', auth.isAuth(), userController._delete);
+
 
 module.exports = router;

@@ -20,11 +20,11 @@ exports.login = async(req, res, next) => {
         if (user) {
             const password_valid = await bcrypt.compare(req.body.password, user.password);
             if (password_valid) {
-                let token = jwt.sign({ userId: user.userId}, 'thisismyverysecretkey', {
+                let token = jwt.sign({ userId: user.userId, username: user.username, firstName: user.firstName, lastName: user.lastName, password: user.password}, 'thisismyverysecretkey', {
                     expiresIn: 60 * 60 * 5,
                 });
                 console.log(token)
-              res.status(200).json({token})
+              res.status(200).json({user, token})
             } else {
                 res.status(400).json({error: "password incorrect"});
             }
@@ -66,3 +66,10 @@ exports.register = async(req, res, next) => {
         res.status(404).send({message: error.message});
     }
 }
+
+
+// const logout = async(req,res,next) => {
+//     try {
+//         req.logout()
+//     }
+// }

@@ -24,9 +24,9 @@ exports.updateList = async(req, res, next) => {
         if (!isValidOperation){
             return res.status(400).send('Invalid updates!')
         }
-
+        const id = req.params.listId;
         try {
-            const list = await List.findOne({where: {listId: req.list.listId, userId: req.userId }})
+            const list = await List.findOne(id)
             if (!list) {
                 res.status(400).send()
             }
@@ -38,3 +38,36 @@ exports.updateList = async(req, res, next) => {
             res.status(500).send(error.message)
         }
     }
+
+
+    exports.deleteList = async(req,res, next) => {
+        // const id = req.params.id
+        s
+        // db.List.findByPk(id)
+        // .then(resultToDelete => {
+        //     console.log(resultToDelete)
+        //     resultToDelete.destroy(id);
+        // })
+        // .then(result => {
+        //     return res.status(200).json('Successfuly deleted record')
+        // })
+        // .catch((error) => {
+        //     res.status(400).json(error.message)
+        // })
+
+
+        try {
+            const list = await db.List.destroy({where: {listId: req.params.id}}).then((function (deletedRecord) {
+                if (deletedRecord === 1) {
+                    res.status(200).json({message: 'Deleted Successfuly'})
+                }
+            }))
+
+            if (!list) {
+                return res.status(404).send()
+            }
+        } catch(error) {
+            res.status(500).send(error.message)
+        }
+    }
+

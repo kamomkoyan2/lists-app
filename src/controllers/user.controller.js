@@ -37,19 +37,22 @@ exports.updateSchema = (req, res, next) => {
 
 exports.updateUser = async(req, res, next) => {
     const updates = Object.keys(req.body);
-    console.log(req.body)
-    const allowUpdates = ['firstName', 'lastName', 'username', 'password'];
-    const isValidOperation = updates.every((update) => allowUpdates.includes(update))
+    const allowedUpdates = ['firstName', 'lastName', 'username', "password"];
+    console.log(req.user)
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
     if (!isValidOperation) {
         return res.status(400).send({error: 'Invalid updates!'});
     }
     try {
+        
+        
         updates.forEach((update) => req.user[update] = req.body[update]);
-        console.log(req.user)
-        await req.user.save()
+        await req.user.update(req.body, {fields: updates})
+        res.send(req.user)
     } catch(error) {
         res.status(400).send(error.message)
     }
+
 
 }
 

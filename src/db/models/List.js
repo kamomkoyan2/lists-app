@@ -6,17 +6,6 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true
         },
 
-        //there is errro to fix
-
-        userId: {
-            type: DataTypes.STRING(1000),
-            allowNull: false,
-            references: {
-                model: 'User',
-                key: 'userId'
-            },
-            field: 'userId'
-        },
         title: {
             type: DataTypes.STRING,
 
