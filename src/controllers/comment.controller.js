@@ -1,6 +1,7 @@
 const Joi = require("joi");
 const validateRequest = require("../_middleware/validate-request");
 const db = require("../db/models");
+const Comment = db.Comment;
 
 exports.createComments = async (req, res, next) => {
   const comment = new Comment({
