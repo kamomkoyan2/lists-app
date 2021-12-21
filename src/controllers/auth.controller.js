@@ -23,8 +23,7 @@ exports.login = async(req, res, next) => {
                 let token = jwt.sign({ userId: user.userId, username: user.username, firstName: user.firstName, lastName: user.lastName, password: user.password}, 'thisismyverysecretkey', {
                     expiresIn: 60 * 60 * 5,
                 });
-                console.log(token)
-              res.status(200).json({user, token})
+              res.status(200).json({token, user})
             } else {
                 res.status(400).json({error: "password incorrect"});
             }

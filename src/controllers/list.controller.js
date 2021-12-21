@@ -5,18 +5,26 @@ const List = db.List;
 const User = db.User
 
 exports.createList = async(req, res, next) => {
-    const user = await User.findOne({where: {userId: req.user.userId}})
-    const list = new List({
-        ...req.body,
-        userId: user.userId
-    })
     try {
+        const list = new List({
+            ...req.body,
+            userId: req.user.userId
+        })
+
         await list.save()
         res.status(201).json(list)
     } catch (error) {
        return  res.status(400).send(error.message)
     }
 }
+
+exports.getLists = async(req,res,next) => {
+    User.findAll({where: {userId: req.user.userId}, attributes: [], include: [{model: List,attributes: ['title', 'content'], as: "user"}]}).then(lists => res.json(lists)).catch((error) => {
+        console.log(error.message)
+    })
+
+}
+
 exports.updateList = async(req, res, next) => {
     const updates = Object.keys(req.body);
     const allowedUpdates = ['title', 'content'];

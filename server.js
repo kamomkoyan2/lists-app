@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const errorHandler = require("./src/_middleware/error-handler");
 
 const db = require("./src/db/models");
+
 const authRoutes = require("./src/routes/auth.routes");
 const userRoutes = require("./src/routes/user.routes");
 const listRoutes = require("./src/routes/list.routes");

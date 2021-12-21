@@ -28,11 +28,12 @@ function isAuth() {
     return compose()
 
         .use(function(req,res,next) {
-        if (req.query || req.headers.hasOwnProperty('access_token')) {
-            req.header.authorization = 'Bearer ' + req.headers.access_token;
+        if (req.query || req.headers.hasOwnProperty('token')) {
+             req.headers.Authorization = 'Bearer ' + req.headers.token;
+            console.log('re headers',  req.headers)
         }
-        if (req.headers.access_token === 'undefined' || !req.headers.access_token) {
-            res.status(401).json({message: 'Unauthorized'})
+        if (req.headers.Authorization === 'undefined' || !req.headers.Authorization) {
+            return res.status(401).json({message: 'Unauthorized'})
         }
         validateJwt(req,res,next);
     })

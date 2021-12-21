@@ -5,8 +5,7 @@ const Comment = db.Comment;
 
 exports.createComments = async (req, res, next) => {
   const comment = new Comment({
-    ...req,
-    body,
+    ...req.body,
     userId: user.userId,
   });
   try {

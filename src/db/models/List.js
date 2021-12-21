@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         );
 
     List.associate = models => {
-        List.belongsTo(models.User, {foreignKey: 'userId', as: 'user'})
+        List.belongsTo(models.User, {foreignKey: 'userId', as: 'list'})
     }
 
     return List
