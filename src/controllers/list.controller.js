@@ -19,7 +19,7 @@ exports.createList = async(req, res, next) => {
 }
 
 exports.getLists = async(req,res,next) => {
-    User.findAll({where: {userId: req.user.userId}, attributes: [], include: [{model: List,attributes: ['title', 'content'], as: "user"}]}).then(lists => res.json(lists)).catch((error) => {
+    List.findAll({where: {userId: req.user.userId}}).then(lists => res.json(lists)).catch((error) => {
         console.log(error.message)
     })
 
