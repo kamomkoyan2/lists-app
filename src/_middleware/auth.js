@@ -30,7 +30,6 @@ function isAuth() {
         .use(function(req,res,next) {
         if (req.query || req.headers.hasOwnProperty('token')) {
              req.headers.Authorization = 'Bearer ' + req.headers.token;
-            console.log('re headers',  req.headers)
         }
         if (req.headers.Authorization === 'undefined' || !req.headers.Authorization) {
             return res.status(401).json({message: 'Unauthorized'})

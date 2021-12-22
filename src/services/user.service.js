@@ -41,6 +41,7 @@ const _delete = async (id) => {
 // helper functions
 
 const getUser = async (id) => {
+
   const user = await db.User.findByPk(id);
   if (!user) throw "User not found";
   return user;

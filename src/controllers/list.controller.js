@@ -18,6 +18,21 @@ exports.createList = async(req, res, next) => {
     }
 }
 
+
+exports.getListById = async (req,res,next) => {
+    const id = req.params.id;
+    console.log(id)
+    try {
+        const list = await db.List.findByPk(id, {userId: req.user.userId});
+        if (!list) {
+             return res.status(401).json({error: "there is no list with given id"});
+        }
+        res.status(200).json(list)
+    } catch(error) {
+        res.status(500).send(error.message)
+    }
+}
+
 exports.getLists = async(req,res,next) => {
     List.findAll({where: {userId: req.user.userId}}).then(lists => res.json(lists)).catch((error) => {
         console.log(error.message)
@@ -50,7 +65,6 @@ exports.updateList = async(req, res, next) => {
 
     exports.deleteList = async(req,res, next) => {
         // const id = req.params.id
-        s
         // db.List.findByPk(id)
         // .then(resultToDelete => {
         //     console.log(resultToDelete)
