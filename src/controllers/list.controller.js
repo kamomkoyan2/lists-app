@@ -47,12 +47,15 @@ exports.updateList = async(req, res, next) => {
         if (!isValidOperation){
             return res.status(400).send('Invalid updates!')
         }
-        const id = req.params.listId;
+        const id = req.params.id;
         try {
-            const list = await List.findOne(id)
-            if (!list) {
-                res.status(400).send()
-            }
+            const list = await List.findByPk(id, {where: {id: req.user.userId}})
+            if (list.userId !== req.user.userId){
+                return res.status(401).json({error: {
+                    message: `you can only update your own list, you haven't list with provided id - ${id}`
+                }})
+            } 
+
             updates.forEach((update) => list[update] = req.body[update])
             await list.save()
             res.send(list)
